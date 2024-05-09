@@ -44,7 +44,7 @@ pub fn close_to<T: Float, U: Into<T>>(left: T, right: U, precision: i32) -> (boo
 /// assert_close_to(1.0, 1.0001, 4); // panic with the following message
 ///
 /// // assertion 'left ≈ right` failed
-/// // left: 1
+/// // left:  1
 /// // right: 1.0001
 /// // received_diff: 0.00009999999999998899
 /// // expected_diff: 0.00005
@@ -56,7 +56,7 @@ pub fn assert_close_to<T: Float + Display + Copy, U: Display + Into<T> + Copy>(l
 
     if !is_close
     {
-        panic!("assertion 'left ≈ right` failed\n left: {}\nright: {}\nreceived_diff: {}\nexpected_diff: {}", left, right, received_diff, expected_diff);
+        panic!("assertion 'left ≈ right` failed\n left:  {}\nright: {}\nreceived_diff: {}\nexpected_diff: {}", left, right, received_diff, expected_diff);
     }
 }
 
@@ -101,7 +101,7 @@ pub fn far_from<T: Float, U: Into<T>>(left: T, right: U, precision: i32) -> (boo
 /// assert_far_from(1.0, 1.0001, 3); // panic with the following message
 ///
 /// // assertion 'left != right` failed
-/// // left: 1
+/// // left:  1
 /// // right: 1.0001
 /// // received_diff: 0.00009999999999998899
 /// // expected_diff: 0.0005
@@ -112,7 +112,7 @@ pub fn assert_far_from<T: Float + Display + Copy, U: Display + Into<T> + Copy>(l
 
     if !is_far
     {
-        panic!("assertion 'left != right` failed\n left: {}\nright: {}\nreceived_diff: {}\nexpected_diff: {}", left, right, received_diff, expected_diff);
+        panic!("assertion 'left != right` failed\n left:  {}\nright: {}\nreceived_diff: {}\nexpected_diff: {}", left, right, received_diff, expected_diff);
     }
 }
 
