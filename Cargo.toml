@@ -1,7 +1,19 @@
 [package]
 name = "close-to"
 version = "0.1.0"
+authors = ["azishio"]
 edition = "2021"
+description = "Crate providing comparisons with arbitrary precision."
+
+documentation = "https://docs.rs/close-to"
+homepage = "https://crates.io/crates/close-to"
+repository = "https://github.com/azishio/close-to-rs"
+
+readme = "README.md"
+
+keywords = ["assert", "float", "close", "approximate"]
+categories = ["development-tools::debugging", "development-tools::testing"]
+license = "MIT OR Apache-2.0"
 
 [dependencies]
 num = "0.4.3"
