@@ -72,3 +72,64 @@ impl<T: Float + Display> AssertCloseTo for T
     }
 }
 
+#[cfg(test)]
+mod test
+{
+    use super::*;
+
+    #[test]
+    fn test_close_to()
+    {
+        assert!(close_to(1.0, 1.0001, 3));
+        assert!(!close_to(1.0, 1.0001, 4));
+    }
+
+    #[test]
+    fn test_assert_close_to()
+    {
+        assert_close_to(1.0, 1.0001, 3);
+        assert_far_from(1.0, 1.0001, 4);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_assert_close_to_panic()
+    {
+        assert_close_to(1.0, 1.0001, 4);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_assert_far_from_panic()
+    {
+        assert_far_from(1.0, 1.0001, 3);
+    }
+
+    #[test]
+    fn test_trait()
+    {
+        assert!(1.0.close_to(1.0001, 3));
+        assert!(!1.0.close_to(1.0001, 4));
+    }
+
+    #[test]
+    fn test_trait_assert()
+    {
+        1.0.assert_close_to(1.0001, 3);
+        1.0.assert_far_from(1.0001, 4);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_trait_assert_panic()
+    {
+        1.0.assert_close_to(1.0001, 4);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_trait_assert_far_from_panic()
+    {
+        1.0.assert_far_from(1.0001, 3);
+    }
+}
