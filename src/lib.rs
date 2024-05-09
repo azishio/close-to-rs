@@ -2,7 +2,34 @@ use std::fmt::Display;
 
 use num::Float;
 
-pub fn close_to<T: Float, U: Float + Into<T>>(left: T, right: U, precision: i32) -> bool
+/// ２つの小数が指定した精度で等しいかどうかを判定する。
+///
+/// # Examples
+///
+/// ```
+/// use close_to::close_to;
+///
+/// assert!(close_to(1.0, 1.0001, 3));
+///```
+/// ```should_panic
+/// use close_to::close_to;
+///
+/// assert!(close_to(1.0, 1.0001, 4));
+/// ```
+///
+/// この関数は以下のようにして、異なる型の小数を比較することもできる。
+/// このとき、右辺の型は、左辺の型へのIntoトレイトを実装している必要がある。
+///
+/// # Examples
+///
+/// ```
+/// use close_to::close_to;
+///
+/// assert!(close_to(1.0_f64, 1.0001_f32, 3));
+/// assert!(!close_to(1.0_f64, 1_u8, 4));
+/// ```
+///
+pub fn close_to<T: Float, U: Into<T>>(left: T, right: U, precision: i32) -> (bool, T, T)
 {
     let expected_diff = T::from(10).unwrap().powi(-precision) / T::from(2).unwrap();
 
@@ -12,6 +39,39 @@ pub fn close_to<T: Float, U: Float + Into<T>>(left: T, right: U, precision: i32)
 }
 
 pub fn assert_close_to<T: Float + Display, U: Float + Display + Into<T>>(left: T, right: U, precision: i32)
+/// ２つの小数が指定した精度で等しいことを保証する。
+/// パニックになると、この関数は小数の値をデバッグ表現とともに出力する。
+///
+/// # Examples
+///
+/// ```
+/// use close_to::assert_close_to;
+///
+/// assert_close_to(1.0, 1.0001, 3);
+/// ```
+/// ```should_panic
+/// use close_to::assert_close_to;
+///
+/// assert_close_to(1.0, 1.0001, 4); // panic with the following message
+///
+/// // assertion 'left ≈ right` failed
+/// // left: 1
+/// // right: 1.0001
+/// // received_diff: 0.00009999999999998899
+/// // expected_diff: 0.00005
+/// ```
+///
+/// この関数は以下のようにして、異なる型の小数を比較することもできる。
+/// このとき、右辺の型は、左辺の型へのIntoトレイトを実装している必要がある。
+///
+/// # Examples
+///
+/// ```
+/// use close_to::assert_close_to;
+///
+/// assert_close_to(1.0_f64, 1.0001_f32, 3);
+/// ```
+pub fn assert_close_to<T: Float + Display + Copy, U: Display + Into<T> + Copy>(left: T, right: U, precision: i32)
 {
     if !close_to(left, right, precision)
     {
@@ -21,11 +81,47 @@ pub fn assert_close_to<T: Float + Display, U: Float + Display + Into<T>>(left: T
 
 
 pub fn far_from<T: Float, U: Float + Into<T>>(left: T, right: U, precision: i32) -> bool
+/// 2つの小数が指定した精度で等しくないかどうかを判定する。
+///
+/// # Examples
+///
+/// ```
+/// use close_to::far_from;
+///
+/// assert!(far_from(1.0, 1.0001, 4));
+/// ```
+/// ```should_panic
+/// use close_to::far_from;
+///
+/// assert!(far_from(1.0, 1.0001, 3));
+/// ```
 {
     !close_to(left, right, precision)
 }
 
 pub fn assert_far_from<T: Float + Display, U: Float + Display + Into<T>>(left: T, right: U, precision: i32)
+
+/// 2つの小数が指定した精度で等しくないことを保証する。
+/// パニックになると、この関数は小数の値をデバッグ表現とともに出力する。
+///
+/// # Examples
+///
+/// ```
+/// use close_to::assert_far_from;
+///
+/// assert_far_from(1.0, 1.0001, 4);
+/// ```
+/// ```should_panic
+/// use close_to::assert_far_from;
+///
+/// assert_far_from(1.0, 1.0001, 3); // panic with the following message
+///
+/// // assertion 'left != right` failed
+/// // left: 1
+/// // right: 1.0001
+/// // received_diff: 0.00009999999999998899
+/// // expected_diff: 0.0005
+/// ```
 {
     if !far_from(left, right, precision)
     {
