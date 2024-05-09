@@ -2,6 +2,8 @@ use std::fmt::Display;
 
 use num::Float;
 
+/// Determine if two decimals are equal with the specified precision.
+///
 /// ２つの小数が指定した精度で等しいかどうかを判定する。
 ///
 /// # Examples
@@ -28,6 +30,9 @@ pub fn close_to<T: Float, U: Into<T>>(left: T, right: U, precision: i32) -> (boo
     (received_diff <= expected_diff, expected_diff, received_diff)
 }
 
+/// Ensures that two decimals are equal with the specified precision.
+/// In case of panic, the function outputs the value of the decimal along with a debug expression.
+///
 /// ２つの小数が指定した精度で等しいことを保証する。
 /// パニックになると、この関数は小数の値をデバッグ表現とともに出力する。
 ///
@@ -60,7 +65,8 @@ pub fn assert_close_to<T: Float + Display + Copy, U: Display + Into<T> + Copy>(l
     }
 }
 
-
+/// Determine if two decimals are not equal with the specified precision.
+///
 /// 2つの小数が指定した精度で等しくないかどうかを判定する。
 ///
 /// # Examples
@@ -84,7 +90,9 @@ pub fn far_from<T: Float, U: Into<T>>(left: T, right: U, precision: i32) -> (boo
     (!is_close, expected_diff, received_diff)
 }
 
-
+/// Ensures that two decimals are not equal with the specified precision.
+/// In case of panic, the function outputs the value of the decimal along with a debugging expression.
+///
 /// 2つの小数が指定した精度で等しくないことを保証する。
 /// パニックになると、この関数は小数の値をデバッグ表現とともに出力する。
 ///
@@ -116,6 +124,9 @@ pub fn assert_far_from<T: Float + Display + Copy, U: Display + Into<T> + Copy>(l
     }
 }
 
+/// Trait to determine if two decimals are equal to a specified precision.
+/// Implemented in float type by default.
+///
 /// 2つの小数が指定した精度で等しいかどうかを判定するトレイト。
 /// デフォルトでfloat型に実装されている。
 ///
@@ -131,12 +142,20 @@ pub fn assert_far_from<T: Float + Display + Copy, U: Display + Into<T> + Copy>(l
 /// ```
 pub trait CloseTo<T, U: Into<T>>
 {
+    /// Determine if two decimals are equal with the specified precision.
+    ///
     /// 2つの小数が指定した精度で等しいかどうかを判定する。
     fn close_to(&self, other: U, precision: i32) -> (bool, T, T);
+
+    /// Determine if two decimals are not equal with the specified precision.
+    ///
     /// 2つの小数が指定した精度で等しくないかどうかを判定する。
     fn far_from(&self, other: U, precision: i32) -> (bool, T, T);
 }
 
+/// A trace that guarantees that two decimals are equal to a specified precision.
+/// Implemented in float type by default.
+///
 /// 2つの小数が指定した精度で等しいことを保証するトレイト。
 /// デフォルトでfloat型に実装されている。
 ///
@@ -150,8 +169,12 @@ pub trait CloseTo<T, U: Into<T>>
 /// ```
 pub trait AssertCloseTo<T>
 {
+    /// Ensures that two decimals are equal with the specified precision.
+    ///
     /// 2つの小数が指定した精度で等しいことを保証する。
     fn assert_close_to(&self, other: T, precision: i32);
+    /// Ensures that no two decimals are equal at the specified precision.
+    ///
     /// 2つの小数が指定した精度で等しくないことを保証する。
     fn assert_far_from(&self, other: T, precision: i32);
 }

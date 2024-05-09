@@ -1,8 +1,12 @@
 # close-to-rs
 
+Provides a function, Tolerate, to verify the equivalence of floating-point numbers at arbitrary precision.
+
 任意の精度で浮動小数点数の等価性を検証するための関数、トレイトを提供します。
 
-## 使い方
+## 使い方(Usage)
+
+Compare values with arbitrary precision.
 
 任意の精度で数値を比較する。
 
@@ -25,6 +29,9 @@ fn example() {
 }
 ```
 
+Different types can be compared if the first argument `T` is a floating-point number and the second argument `U`
+implements `Into<T>`.
+
 異なる型同士でも、第1引数`T`が浮動小数点数かつ、第２引数`U`が`Into<T>`を実装していれば比較できます。
 
 ```rust
@@ -37,6 +44,8 @@ fn example() {
     close_to(1.0_f32, 1.0001_f64, 3); // the trait bound `f32: std::convert::From<f64>` is not satisfied [E0277]
 }
 ```
+
+There is also a function that panics if the result of the comparison is false, along with a debug expression.
 
 また、比較した結果がfalseである場合、デバック表現とともにpanicする関数もあります。
 
@@ -62,6 +71,10 @@ fn example() {
 }
 ```
 
+Traits are also provided to implement these functions.
+By default, they are implemented for `f32` and `f64`.
+`T.close_to(U, precision)` and `close_to(T, U, precision)` have the same behavior.
+
 これらの機能を実装するためのトレイトも提供しています。
 デフォルトでは、`f32`と`f64`に対して実装されています。
 `T.close_to(U, precision)`と`close_to(T, U, precision)`は同じ挙動をします。
@@ -81,7 +94,7 @@ fn example() {
 }
 ```
 
-## ライセンス
+## ライセンス(License)
 
 Licensed under either of
 
