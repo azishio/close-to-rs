@@ -1,6 +1,6 @@
 [package]
 name = "close-to"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["azishio"]
 edition = "2021"
 description = "Crate providing comparisons with arbitrary precision."
