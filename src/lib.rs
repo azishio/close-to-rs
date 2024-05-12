@@ -65,6 +65,14 @@ pub fn assert_close_to<T: Float + Display + Copy, U: Display + Into<T> + Copy>(l
     }
 }
 
+/// Alias for `assert_close_to` for compatibility with [assert-be-close](https://crates.io/crates/assert-be-close).
+///
+/// [assert-be-close](https://crates.io/crates/assert-be-close)との互換性を保つための`assert_close_to`のエイリアス。
+pub fn assert_be_close<T: Float + Display + Copy, U: Display + Into<T> + Copy>(left: T, right: U, precision: i32)
+{
+    assert_close_to(left, right, precision);
+}
+
 /// Determine if two decimals are not equal with the specified precision.
 ///
 /// 2つの小数が指定した精度で等しくないかどうかを判定する。
@@ -124,6 +132,14 @@ pub fn assert_far_from<T: Float + Display + Copy, U: Display + Into<T> + Copy>(l
     }
 }
 
+/// Alias for `assert_not_close` for compatibility with [assert-not-close](https://crates.io/crates/assert-not-close).
+///
+/// [assert-not-close](https://crates.io/crates/assert-not-close)との互換性を保つための`assert_not_close`のエイリアス。
+pub fn assert_not_close<T: Float + Display + Copy, U: Display + Into<T> + Copy>(left: T, right: U, precision: i32)
+{
+    assert_far_from(left, right, precision);
+}
+
 /// Trait to determine if two decimals are equal to a specified precision.
 /// Implemented in float type by default.
 ///
@@ -178,7 +194,6 @@ pub trait AssertCloseTo<T>
     /// 2つの小数が指定した精度で等しくないことを保証する。
     fn assert_far_from(&self, other: T, precision: i32);
 }
-
 
 impl<T: Float, U: Into<T>> CloseTo<T, U> for T
 {

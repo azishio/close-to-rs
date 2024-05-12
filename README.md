@@ -4,6 +4,11 @@ Provides a function, Tolerate, to verify the equivalence of floating-point numbe
 
 任意の精度で浮動小数点数の等価性を検証するための関数、トレイトを提供します。
 
+An alias also exists for compatibility with [assert-be-close](https://crates.io/crates/assert-be-close), so changing the
+crate does not require changing the code.
+
+[assert-be-close](https://crates.io/crates/assert-be-close)との互換性を保つためのエイリアスも存在するため、クレートを変更してもコードを変更する必要がありません。
+
 ## 使い方(Usage)
 
 Compare values with arbitrary precision.
